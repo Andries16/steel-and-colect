@@ -35,12 +35,12 @@ local function makeDefaultProfile(): Profile
     return {
         meta = { schemaVersion = SCHEMA_VERSION, createdAt = now, lastSeenAt = now },
         economy = { currency = 0, lifetimeEarned = 0 },
-        collection = { owned = {} },
+        collection = { owned = { { instanceId = HttpService:GenerateGUID(false), definitionId = "sprout", acquiredAt = now } } },
         base = { level = 1, displaySlots = 5, placedBySlot = {}, defenseLevel = 0 },
         progression = { tutorialCompleted = false, level = 1, experience = 0 },
         security = {},
         purchases = { processedPurchaseIds = {} },
-        statistics = { collectiblesCollected = 0, successfulRaids = 0, failedRaids = 0 },
+        statistics = { collectiblesCollected = 1, successfulRaids = 0, failedRaids = 0 },
     }
 end
 
