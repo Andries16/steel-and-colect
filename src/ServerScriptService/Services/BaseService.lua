@@ -4,7 +4,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
 local Config = require(ReplicatedStorage.Shared.Config.GameConfig)
-local Definitions = require(ReplicatedStorage.Shared.Definitions.Collectibles)
 
 local BaseService = {}
 local assignments: { [number]: number } = {}
@@ -124,8 +123,17 @@ function BaseService:Allocate(player: Player): number?
                 if label then label.Text = player.DisplayName .. "'s BASE" end
                 local floor = model.PrimaryPart
                 if floor then
+                    local function moveCharacter(character: Model)
+                        if assignments[player.UserId] == plotId and character.Parent then
+                            character:PivotTo(floor.CFrame + Vector3.new(0, 5, 0))
+                        end
+                    end
                     local character = player.Character
-                    if character then character:PivotTo(floor.CFrame + Vector3.new(0, 5, 0)) end
+                    if character then
+                        moveCharacter(character)
+                    else
+                        player.CharacterAdded:Once(moveCharacter)
+                    end
                 end
             end
             return plotId
