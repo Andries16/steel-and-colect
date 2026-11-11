@@ -10,12 +10,22 @@ local BaseService = require(Services:WaitForChild("BaseService"))
 local PlayerService = {}
 
 local function initializePlayer(player: Player)
-    if not ProfileService:IsLoaded(player) then return end
+    local deadline = os.clock() + 90
+    while player.Parent == Players and not ProfileService:IsLoaded(player) and os.clock() < deadline do
+        task.wait(0.25)
+    end
+    if player.Parent ~= Players then return end
+    if not ProfileService:IsLoaded(player) then
+        player:Kick("Your player data did not finish loading. Please rejoin.")
+        return
+    end
+
     local plotId = BaseService:Allocate(player)
     if not plotId then
         player:Kick("This server is full. Please join another server.")
         return
     end
+
     local profile = ProfileService:GetProfile(player)
     if profile then
         player:SetAttribute("PlayerLevel", profile.progression.level)
@@ -27,13 +37,7 @@ function PlayerService:Init() end
 
 function PlayerService:Start()
     Players.PlayerAdded:Connect(function(player)
-        task.spawn(function()
-            local deadline = os.clock() + 90
-            while player.Parent == Players and not ProfileService:IsLoaded(player) and os.clock() < deadline do
-                task.wait(0.25)
-            end
-            if player.Parent == Players then initializePlayer(player) end
-        end)
+        task.spawn(initializePlayer, player)
     end)
     Players.PlayerRemoving:Connect(function(player)
         BaseService:Release(player)
