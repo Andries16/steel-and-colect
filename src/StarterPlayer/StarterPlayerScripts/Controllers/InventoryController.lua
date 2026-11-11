@@ -16,7 +16,6 @@ local InventoryController = {}
 local owned: { any } = {}
 local placedBySlot: { [number]: string } = {}
 local displaySlots = 5
-local gui: ScreenGui?
 local inventoryList: ScrollingFrame?
 local slotsList: Frame?
 local statusLabel: TextLabel?
@@ -135,7 +134,6 @@ function InventoryController:Init()
     screen.ResetOnSpawn = false
     screen.IgnoreGuiInset = false
     screen.Parent = playerGui
-    gui = screen
 
     local panel = Instance.new("Frame")
     panel.Name = "InventoryPanel"
