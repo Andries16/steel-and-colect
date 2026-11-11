@@ -9,6 +9,7 @@ local ProfileService = require(ServerScriptService.Services.ProfileService)
 local RemoteRegistry = require(ServerScriptService.Network.RemoteRegistry)
 
 local IncomeService = {}
+local running = false
 local fractionalIncome: { [number]: number } = {}
 local TICK_SECONDS = 1
 local MAX_ELAPSED_PER_TICK = 2
@@ -33,9 +34,10 @@ end
 function IncomeService:Init() end
 
 function IncomeService:Start()
+    running = true
     task.spawn(function()
         local previousTick = os.clock()
-        while true do
+        while running do
             task.wait(TICK_SECONDS)
             local now = os.clock()
             local elapsed = math.min(now - previousTick, MAX_ELAPSED_PER_TICK)
@@ -69,6 +71,7 @@ function IncomeService:Start()
 end
 
 function IncomeService:Destroy()
+    running = false
     table.clear(fractionalIncome)
 end
 
