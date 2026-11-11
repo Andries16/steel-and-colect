@@ -168,6 +168,10 @@ function CollectibleService:Start()
                 slot = slot,
                 instanceId = payload.instanceId,
             })
+            RemoteRegistry.Get("StateUpdated"):FireClient(player, {
+                placedBySlot = profile.base.placedBySlot,
+                displaySlots = profile.base.displaySlots,
+            })
             return
         end
 
@@ -190,6 +194,10 @@ function CollectibleService:Start()
                 action = "unplaced",
                 slot = payload.slot,
                 instanceId = instanceId,
+            })
+            RemoteRegistry.Get("StateUpdated"):FireClient(player, {
+                placedBySlot = profile.base.placedBySlot,
+                displaySlots = profile.base.displaySlots,
             })
             return
         end
