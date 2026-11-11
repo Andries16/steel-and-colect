@@ -189,9 +189,10 @@ function InventoryController:Init()
         if type(response) == "table" and response.success == false and statusLabel then
             statusLabel.Text = tostring(response.message or "Request failed.")
         elseif type(response) == "table" and response.success == true and statusLabel then
-            statusLabel.Text = "Display updated."
+            statusLabel.Text = if response.data and response.data.action == "synced" then "Collection synchronized." else "Display updated."
         end
     end)
+    send("sync", {})
 end
 
 return InventoryController
