@@ -56,4 +56,4 @@ Every handled request receives `requestId`, `success`, `code`, `message`, and op
 
 Validate payload type/size/shape/enums; rate-limit per player; reject unknown actions and stale/replayed IDs where appropriate. Derive price, reward, rarity, ownership, target eligibility, distance, and raid result on the server. Validate character state, proximity, plot ownership, cooldowns, and current server state. A client boolean such as `raidSucceeded` is never proof of success.
 
-The current collectible purchase handler does not yet validate physical marketplace proximity because marketplace geometry has not been implemented. Add server-side proximity checks before exposing purchase requests in a public game. Request-ID replay caching is also still pending.
+Marketplace purchases now require the player character to be within 18 studs of the matching server-generated marketplace stand. Placement and removal require the player to be within 75 studs of their assigned plot. The marketplace ProximityPrompt invokes the same server-side purchase path. Request-ID replay caching is still pending; prompts are a functional blockout rather than final UI.
