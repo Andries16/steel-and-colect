@@ -6,6 +6,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local Services = ServerScriptService:WaitForChild("Services")
 local ProfileService = require(Services:WaitForChild("ProfileService"))
 local BaseService = require(Services:WaitForChild("BaseService"))
+local RemoteRegistry = require(ServerScriptService.Network.RemoteRegistry)
 
 local PlayerService = {}
 
@@ -30,6 +31,11 @@ local function initializePlayer(player: Player)
     if profile then
         player:SetAttribute("PlayerLevel", profile.progression.level)
         player:SetAttribute("Currency", profile.economy.currency)
+        RemoteRegistry.Get("InventoryUpdated"):FireClient(player, profile.collection.owned)
+        RemoteRegistry.Get("StateUpdated"):FireClient(player, {
+            placedBySlot = profile.base.placedBySlot,
+            displaySlots = profile.base.displaySlots,
+        })
     end
 end
 
