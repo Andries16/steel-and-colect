@@ -4,10 +4,10 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local Services = ServerScriptService:WaitForChild("Services")
 local RemoteRegistry = require(ServerScriptService.Network.RemoteRegistry)
 
--- Deliberate dependency order: never rely on pairs() iteration order.
+-- Dependencies are initialized in this explicit order.
 local serviceNames = {
-    "ProfileService", "PlayerService", "EconomyService", "InventoryService",
-    "BaseService", "CollectibleService", "IncomeService", "RaidService",
+    "ProfileService", "BaseService", "PlayerService", "EconomyService",
+    "InventoryService", "CollectibleService", "IncomeService", "RaidService",
     "TransferService", "ProgressionService", "QuestService", "PurchaseService",
     "AnalyticsService",
 }
