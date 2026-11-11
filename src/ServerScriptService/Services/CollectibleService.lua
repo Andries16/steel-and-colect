@@ -98,6 +98,16 @@ function CollectibleService:Start()
             return
         end
 
+        if payload.action == "sync" then
+            RemoteRegistry.Get("InventoryUpdated"):FireClient(player, profile.collection.owned)
+            RemoteRegistry.Get("StateUpdated"):FireClient(player, {
+                placedBySlot = profile.base.placedBySlot,
+                displaySlots = profile.base.displaySlots,
+            })
+            respond(remote, player, requestId, true, "OK", "", { action = "synced" })
+            return
+        end
+
         if payload.action == "purchase" then
             if type(payload.collectibleId) ~= "string" or #payload.collectibleId > 48 then
                 respond(remote, player, requestId, false, "INVALID_COLLECTIBLE", "Invalid collectible.")
