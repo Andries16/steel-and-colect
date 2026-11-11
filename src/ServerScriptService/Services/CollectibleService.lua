@@ -45,6 +45,10 @@ local function isNearMarket(player: Player, collectibleId: string): boolean
 end
 
 function CollectibleService:PurchaseFromWorld(player: Player, collectibleId: string)
+    local now = os.clock()
+    local previous = lastRequestAt[player.UserId] or 0
+    if now - previous < REQUEST_COOLDOWN then return end
+    lastRequestAt[player.UserId] = now
     if not ProfileService:IsLoaded(player) then return end
     local profile = ProfileService:GetProfile(player)
     local definition = Definitions[collectibleId]
