@@ -70,6 +70,15 @@ local function reconcile(data: any): Profile
     return data :: Profile
 end
 
+local function deepCopy(value: any): any
+    if type(value) ~= "table" then return value end
+    local copy = {}
+    for key, child in pairs(value) do
+        copy[key] = deepCopy(child)
+    end
+    return copy
+end
+
 local function keyFor(userId: number): string
     return "player_" .. tostring(userId)
 end
@@ -121,10 +130,13 @@ end
 function ProfileService:Save(player: Player, release: boolean?): boolean
     local userId = player.UserId
     local profile = profiles[userId]
-    if not profile or saving[userId] then return false end
+    if not profile then return false end
+    local waitDeadline = os.clock() + 10
+    while saving[userId] and os.clock() < waitDeadline do task.wait(0.1) end
+    if saving[userId] then return false end
     saving[userId] = true
     profile.meta.lastSeenAt = os.time()
-    local snapshot = profile
+    local snapshot = deepCopy(profile)
     local ok, result = pcall(function()
         return store:UpdateAsync(keyFor(userId), function(current)
             if type(current) ~= "table" or type(current.session) ~= "table"
