@@ -6,7 +6,7 @@ local RemoteRegistry = require(ServerScriptService.Network.RemoteRegistry)
 
 -- Dependencies are initialized in this explicit order.
 local serviceNames = {
-    "ProfileService", "BaseService", "PlayerService", "EconomyService",
+    "ProfileService", "BaseService", "PlayerService", "EconomyService", "MarketplaceService",
     "InventoryService", "CollectibleService", "IncomeService", "RaidService",
     "TransferService", "ProgressionService", "QuestService", "PurchaseService",
     "AnalyticsService",
