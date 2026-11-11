@@ -1,0 +1,5 @@
+[package]
+name = "andries16/steal-and-collect"
+description = "Multiplayer Roblox collectible simulator"
+version = "0.1.0"
+license = "MIT"

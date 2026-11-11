@@ -1,0 +1,13 @@
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+*.lock
+node_modules/
+.wally/
+.selene/
+.stylua/
+.vscode/
+.idea/
+.DS_Store
+*.log
