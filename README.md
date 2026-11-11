@@ -24,12 +24,12 @@ A multiplayer Roblox collectible simulator, tycoon, base-defense, and PvP raidin
 
 - Profile DataStore loading with a server-session lease, schema reconciliation, autosave, and shutdown save attempts.
 - Base plot allocation for up to eight players per server.
-- A starter Sprout collectible for newly created profiles.
+- A starter Sprout collectible for newly created profiles, with server-calculated passive income when displayed.
 - Server-validated collectible purchase, placement, and removal requests, including ownership, balance, slot, and request-rate checks.
 
 ## Known limitations
 
-This is not yet a playable MVP. There is no authored base/world geometry, client UI, passive income loop, economy reward source, marketplace proximity validation, raid gameplay, durable cross-profile transfer journal, automated tests, or CI. The collectible actions are a server-side foundation, not a complete game loop.
+This is not yet a playable MVP. There is no authored base/world geometry, client UI, marketplace proximity validation, raid gameplay, durable cross-profile transfer journal, automated tests, or CI. Passive income is calculated server-side from collectibles assigned to display slots, but there is not yet a player-facing way to manage those slots. The collectible actions are a server-side foundation, not a complete game loop.
 
 The profile/session implementation is an initial scaffold and has not been verified in Roblox Studio. Test DataStore behavior, shutdowns, session contention, and failure recovery in a private development experience before production. Do not enable item theft or trading until durable transfer recovery is implemented.
 
